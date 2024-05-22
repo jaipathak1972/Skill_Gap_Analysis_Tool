@@ -106,4 +106,4 @@ skill-gap-analysis-tool/
     </ul>
 
 ## Contact
-For any questions or suggestions, feel free to reach out to us at your-email@example.com.
+For any questions or suggestions, feel free to reach out to us at jaipathak1972@gmail.com.

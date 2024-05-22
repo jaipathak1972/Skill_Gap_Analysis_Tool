@@ -19,7 +19,7 @@ The Skill Gap Analysis Tool is designed to identify the gap between job requirem
 
 ```plaintext
 skill-gap-analysis-tool/
-├── data/
+├── Data/
 │   ├── data_analiystjobs_data
 │   
 ├── notebooks/

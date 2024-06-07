@@ -20,12 +20,22 @@ The Skill Gap Analysis Tool is designed to identify the gap between job requirem
 ```plaintext
 skill-gap-analysis-tool/
 ├── Data/
-│   ├── data_analiystjobs_data
+│   ├── data_analiystjobs_data.xlsx
+│   ├── data_scientist_jobs_data.xlsx
+│   ├── Finall_data.xlsx
+│   ├── software_jobs_data.xlsx
+│   ├── web_dev_jobs_data.xlsx
+│   
+├── Data/
+├── about_data.txt
+├── cleaning.ipynb
 │   
 ├── notebooks/
 │   ├── EDA.ipynb
 │   ├── Skill_Extraction.ipynb
 │   ├── Profile_Analysis.ipynb
+│   ├── cleaning_again.ipynb
+│   ├── pridicting_price.ipynb
 ├── src/
 │   ├── data_processing.py
 │   ├── skill_extraction.py

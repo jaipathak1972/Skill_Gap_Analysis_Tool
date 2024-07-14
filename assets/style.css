@@ -1,5 +1,6 @@
 body {
     font-family: Arial, sans-serif;
+    margin: 50;
 }
 
 .card {
@@ -23,4 +24,13 @@ body {
     justify-content: space-around;
     padding: 20px;
     width: 100%;
+    color: white;
+    
+}/* Center container and set width for dropdown */
+.center-container {
+    width: 50%; /* Ensure the container takes full width */
+}
+
+.dropdown-width {
+    width: 50%; /* Desired width of the dropdown */
 }

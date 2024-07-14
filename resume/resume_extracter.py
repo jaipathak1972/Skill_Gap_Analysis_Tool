@@ -191,24 +191,48 @@ def extract_education_from_resume(text):
         'Communication Studies', 'Journalism', 'Broadcasting', 'Creative Writing', 'English Literature', 'Linguistics', 'Translation Studies',
         'Foreign Languages', 'Modern Languages', 'Classical Studies', 'History', 'Archaeology', 'Philosophy', 'Theology', 'Religious Studies',
         'Ethics', 'Education', 'Early Childhood Education', 'Elementary Education', 'Secondary Education', 'Special Education', 'Higher Education',
-        'Adult Education', 'Distance Education', 'Online Education', 'Instructional Design', 'Curriculum Development'
-        'Library Science', 'Information Science', 'Computer Engineering', 'Software Development', 'Cybersecurity', 'Information Security',
-        'Network Engineering', 'Data Science', 'Data Analytics', 'Business Analytics', 'Operations Research', 'Decision Sciences',
-        'Human-Computer Interaction', 'User Experience Design', 'User Interface Design', 'Digital Marketing', 'Content Strategy',
-        'Brand Management', 'Public Relations', 'Corporate Communications', 'Media Production', 'Digital Media', 'Web Development',
-        'Mobile App Development', 'Game Development', 'Virtual Reality', 'Augmented Reality', 'Blockchain Technology', 'Cryptocurrency',
-        'Digital Forensics', 'Forensic Science', 'Criminalistics', 'Crime Scene Investigation', 'Emergency Management', 'Fire Science',
-        'Environmental Science', 'Climate Science', 'Meteorology', 'Geography', 'Geomatics', 'Remote Sensing', 'Geoinformatics',
-        'Cartography', 'GIS (Geographic Information Systems)', 'Environmental Management', 'Sustainability Studies', 'Renewable Energy',
-        'Green Technology', 'Ecology', 'Conservation Biology', 'Wildlife Biology', 'Zoology',]
+        'Adult Education', 'Distance Education', 'Online Education', 'Instructional Design', 'Curriculum Development', 'Library Science', 'Information Science',
+        'Computer Engineering', 'Software Development', 'Cybersecurity', 'Information Security', 'Network Engineering', 'Data Science', 'Data Analytics',
+        'Business Analytics', 'Operations Research', 'Decision Sciences', 'Human-Computer Interaction', 'User Experience Design', 'User Interface Design',
+        'Digital Marketing', 'Content Strategy', 'Brand Management', 'Public Relations', 'Corporate Communications', 'Media Production', 'Digital Media',
+        'Web Development', 'Mobile App Development', 'Game Development', 'Virtual Reality', 'Augmented Reality', 'Blockchain Technology', 'Cryptocurrency',
+        'Digital Forensics', 'Forensic Science', 'Criminalistics', 'Crime Scene Investigation', 'Emergency Management', 'Fire Science', 'Environmental Science',
+        'Climate Science', 'Meteorology', 'Geography', 'Geomatics', 'Remote Sensing', 'Geoinformatics', 'Cartography', 'GIS (Geographic Information Systems)',
+        'Environmental Management', 'Sustainability Studies', 'Renewable Energy', 'Green Technology', 'Ecology', 'Conservation Biology', 'Wildlife Biology',
+        'Zoology'
+    ]
 
-    for keyword in education_keywords:
-        pattern = r"(?i)\b{}\b".format(re.escape(keyword))
-        match = re.search(pattern, text)
-        if match:
-            education.append(match.group())
+    # Add common degree abbreviations and formats
+    degree_keywords = [
+        'Bachelor of', 'Master of', 'B.Sc', 'M.Sc', 'B.Tech', 'M.Tech', 'B.E.', 'M.E.', 'BBA', 'MBA', 'BCA', 'MCA', 'Ph.D', 'Doctorate', 'Diploma'
+    ]
 
-    return education
+    combined_keywords = education_keywords + degree_keywords
+
+    # Clean and normalize the text
+    text = re.sub(r'\s+', ' ', text)  # Replace multiple spaces with a single space
+
+    # Patterns to capture educational details
+    patterns = [
+        r'(?i)\b(?:' + '|'.join(map(re.escape, combined_keywords)) + r')\b.*?(?=\s+\d{4}|$)',
+        r'(?i)\b(?:Spring|Summer|Fall|Winter)\b \d{4}',
+        r'(?i)\b\d{4}\b'
+    ]
+    # 0681810061
+
+    for pattern in patterns:
+        matches = re.findall(pattern, text)
+        for match in matches:
+            education.append(match.strip())
+
+    # Post-process to clean the extracted data
+    processed_education = []
+    for item in education:
+        if any(kw.lower() in item.lower() for kw in combined_keywords) and re.search(r'\d{4}', item):
+            processed_education.append(item)
+    
+    return list(set(processed_education))  # Remove duplicates
+
 
 def extract_soft_skill(text):
     softskill = []
@@ -295,7 +319,7 @@ def extract_location_from_resume(text):
 
     return location
 
-resume = r'C:\Users\Dell\OneDrive\Desktop\advance web scraping\Nakri_data_set\Skill_Gap_Analysis_Tool\resume\data\Ishita Pathak CV.pdf'
+resume = r'C:\Users\Dell\OneDrive\Desktop\advance web scraping\Nakri_data_set\Skill_Gap_Analysis_Tool\resume\data\fresher_1_page_resume.pdf'
 
 
 def pred(resume_file):
@@ -342,4 +366,4 @@ def pred(resume_file):
         "name": name
     }
 
-print(resume)
+print(pred(resume))
